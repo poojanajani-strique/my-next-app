@@ -1,30 +1,10 @@
-'use client'
+import { Suspense } from 'react'
+import HomePage from './homepage'
 
-import { useSearchParams } from 'next/navigation'
-
-export default function HomePage() {
-  const searchParams = useSearchParams()
-  const email = searchParams.get('email')
-
-  const iframeUrl = email
-    ? `https://ad-server-three.vercel.app/?email=${encodeURIComponent(email)}`
-    : null
-
+export default function Page() {
   return (
-    <main>
-      <h1>Welcome to the Homepage</h1>
-
-      {iframeUrl ? (
-        <iframe
-          src={iframeUrl}
-          title="Ad Slot"
-          width="300"
-          height="250"
-          style={{ border: 'none', marginTop: '20px' }}
-        />
-      ) : (
-        <p>No ad to show. Please include an email in the query param.</p>
-      )}
-    </main>
+    <Suspense fallback={<div>Loading ad...</div>}>
+      <HomePage />
+    </Suspense>
   )
 }
